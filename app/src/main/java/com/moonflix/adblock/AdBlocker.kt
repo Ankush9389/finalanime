@@ -65,6 +65,8 @@ object AdBlocker {
     )
 
     private val ALLOWED_HOSTS = hashSetOf(
+        "piratexplay.cc",
+        "www.piratexplay.cc",
         "kartoons.to",
         "www.kartoons.to",
         "m1.multimovies.courses",
