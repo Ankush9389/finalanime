@@ -39,7 +39,11 @@ class MainActivity : AppCompatActivity() {
 
     private var pageLoadCount = 0
 
-    private val smartlinkUrl = "https://asiafilm.org/4/c06e7c91ca54b103a6ef1e8c45e46d2f"
+    private val smartlinkUrls = listOf(
+        "https://auctionr.org/4/9b86ed860c60785ad3e8bc6c9b425d8f",
+        "https://directyp.org/4/04d85e7e691024d70e679ffe55021e49"
+    )
+    private var smartlinkIndex = 0
     private val startUrl = "https://kartoons.to/home"
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -95,7 +99,7 @@ class MainActivity : AppCompatActivity() {
                 view?.evaluateJavascript(AdBlocker.COSMETIC_ADBLOCK_JS, null)
 
                 pageLoadCount++
-                if (pageLoadCount == 2 || pageLoadCount % 5 == 0) {
+                if (pageLoadCount == 2 || pageLoadCount % 4 == 0) {
                     openSmartlink()
                 }
             }
@@ -214,12 +218,12 @@ class MainActivity : AppCompatActivity() {
                 </style>
             </head>
             <body>
-                <script async="async" data-cfasync="false" src="https://bauval.org/21/b45a39ce7653b015bcb56101c755adf1"></script>
-                <div id="container-b45a39ce7653b015bcb56101c755adf1"></div>
+                <script async="async" data-cfasync="false" src="https://bancadeltempoidea.org/21/f2b3e68c99750b558db841edd8d711a1"></script>
+                <div id="container-f2b3e68c99750b558db841edd8d711a1"></div>
             </body>
             </html>
         """.trimIndent()
-        topNativeAdWebView.loadDataWithBaseURL("https://bauval.org", topNativeHtml, "text/html", "UTF-8", null)
+        topNativeAdWebView.loadDataWithBaseURL("https://bancadeltempoidea.org", topNativeHtml, "text/html", "UTF-8", null)
     }
 
     private fun setupBottomAds() {
@@ -236,24 +240,27 @@ class MainActivity : AppCompatActivity() {
             <body>
                 <script>
                   atOptions = {
-                    'key' : 'e66e3084f4370be3ee40f727d0de9775',
+                    'key' : '89da2ea309aba24884ff76174c5cfa52',
                     'format' : 'iframe',
-                    'height' : 90,
-                    'width' : 728,
+                    'height' : 250,
+                    'width' : 300,
                     'params' : {}
                   };
                 </script>
-                <script src="https://bauval.org/22/e66e3084f4370be3ee40f727d0de9775"></script>
-                <script data-cfasync="false" src="https://bauval.org/14/562771f3a4515f97bcd8949fed06f1e4"></script>
+                <script src="https://bancadeltempoidea.org/22/89da2ea309aba24884ff76174c5cfa52"></script>
+                <script data-cfasync="false" src="https://bancadeltempoidea.org/14/e43af5cc43cdb3431beb7ef54f9624f6"></script>
+                <script data-cfasync="false" src="https://aarems.org/1/e8c86258e72c6e20606fde3e75a35c93"></script>
             </body>
             </html>
         """.trimIndent()
-        nativeAdWebView.loadDataWithBaseURL("https://bauval.org", bottomAdHtml, "text/html", "UTF-8", null)
+        nativeAdWebView.loadDataWithBaseURL("https://bancadeltempoidea.org", bottomAdHtml, "text/html", "UTF-8", null)
     }
 
     private fun openSmartlink() {
         try {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(smartlinkUrl))
+            val url = smartlinkUrls[smartlinkIndex % smartlinkUrls.size]
+            smartlinkIndex++
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         } catch (_: Exception) {
         }
