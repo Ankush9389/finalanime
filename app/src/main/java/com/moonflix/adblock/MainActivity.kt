@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         "https://directyp.org/4/bae193dc8298ba66cab50b57861444bd"
     )
     private var smartlinkIndex = 0
-    private val startUrl = "https://kartoons.to/home"
+    private val startUrl = "https://piratexplay.cc/home"
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
