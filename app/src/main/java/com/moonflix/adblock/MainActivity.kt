@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         webView.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 clickCount++
-                if (clickCount % 8 == 0) {
+                if (clickCount % 16 == 0) {
                     openSmartlink()
                 }
             }
