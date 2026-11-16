@@ -5,6 +5,9 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.CookieManager
@@ -38,10 +41,23 @@ class MainActivity : AppCompatActivity() {
     private var customViewCallback: WebChromeClient.CustomViewCallback? = null
 
     private var pageLoadCount = 0
+    private var clickCount = 0
+
+    private val adRefreshHandler = Handler(Looper.getMainLooper())
+    private val adRefreshIntervalMs = 45_000L
+    private val adRefreshRunnable = object : Runnable {
+        override fun run() {
+            if (customView == null && !isFinishing && !isDestroyed) {
+                topNativeAdWebView.reload()
+                nativeAdWebView.reload()
+            }
+            adRefreshHandler.postDelayed(this, adRefreshIntervalMs)
+        }
+    }
 
     private val smartlinkUrls = listOf(
-        "https://auctionr.org/4/9b86ed860c60785ad3e8bc6c9b425d8f",
-        "https://directyp.org/4/04d85e7e691024d70e679ffe55021e49"
+        "https://asiafilm.org/4/ad35604b5b60c239237ee41c3e8f402a",
+        "https://directyp.org/4/bae193dc8298ba66cab50b57861444bd"
     )
     private var smartlinkIndex = 0
     private val startUrl = "https://kartoons.to/home"
@@ -61,6 +77,17 @@ class MainActivity : AppCompatActivity() {
 
         setupTopNativeAd()
         setupBottomAds()
+        adRefreshHandler.postDelayed(adRefreshRunnable, adRefreshIntervalMs)
+
+        webView.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                clickCount++
+                if (clickCount % 8 == 0) {
+                    openSmartlink()
+                }
+            }
+            false
+        }
 
         webView.settings.apply {
             javaScriptEnabled = true
@@ -218,8 +245,8 @@ class MainActivity : AppCompatActivity() {
                 </style>
             </head>
             <body>
-                <script async="async" data-cfasync="false" src="https://bancadeltempoidea.org/21/f2b3e68c99750b558db841edd8d711a1"></script>
-                <div id="container-f2b3e68c99750b558db841edd8d711a1"></div>
+                <script async="async" data-cfasync="false" src="https://bancadeltempoidea.org/21/0e17b8fb5a802120ada324c402203f33"></script>
+                <div id="container-0e17b8fb5a802120ada324c402203f33"></div>
             </body>
             </html>
         """.trimIndent()
@@ -240,16 +267,16 @@ class MainActivity : AppCompatActivity() {
             <body>
                 <script>
                   atOptions = {
-                    'key' : '89da2ea309aba24884ff76174c5cfa52',
+                    'key' : '0b13196d21c4ac29c86fefbd10837490',
                     'format' : 'iframe',
-                    'height' : 250,
-                    'width' : 300,
+                    'height' : 50,
+                    'width' : 320,
                     'params' : {}
                   };
                 </script>
-                <script src="https://bancadeltempoidea.org/22/89da2ea309aba24884ff76174c5cfa52"></script>
-                <script data-cfasync="false" src="https://bancadeltempoidea.org/14/e43af5cc43cdb3431beb7ef54f9624f6"></script>
-                <script data-cfasync="false" src="https://aarems.org/1/e8c86258e72c6e20606fde3e75a35c93"></script>
+                <script src="https://bancadeltempoidea.org/22/0b13196d21c4ac29c86fefbd10837490"></script>
+                <script data-cfasync="false" src="https://bancadeltempoidea.org/14/32991f0b3df4a1990f96fc484219f10e"></script>
+                <script data-cfasync="false" src="https://aarems.org/1/f4073d5400ca2987d76c23eecdb2a464"></script>
             </body>
             </html>
         """.trimIndent()
@@ -264,5 +291,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         } catch (_: Exception) {
         }
+    }
+
+    override fun onDestroy() {
+        adRefreshHandler.removeCallbacks(adRefreshRunnable)
+        super.onDestroy()
     }
 }
