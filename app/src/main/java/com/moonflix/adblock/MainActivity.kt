@@ -60,7 +60,8 @@ class MainActivity : AppCompatActivity() {
         "https://directyp.org/4/bae193dc8298ba66cab50b57861444bd"
     )
     private var smartlinkIndex = 0
-    private val startUrl = "https://moonflix.website/browse"
+    private val moviesUrl = "https://moonflix.website/browse"
+    private val animeUrl = "https://kartoons.to/home"
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,7 +99,10 @@ class MainActivity : AppCompatActivity() {
             javaScriptCanOpenWindowsAutomatically = false
             useWideViewPort = true
             loadWithOverviewMode = true
+            userAgentString = "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36"
         }
+        CookieManager.getInstance().setAcceptCookie(true)
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
 
         webView.webViewClient = object : WebViewClient() {
             override fun shouldInterceptRequest(
@@ -212,7 +216,119 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        webView.loadUrl(startUrl)
+        loadHomePage()
+    }
+
+    private fun loadHomePage() {
+        val homeHtml = """
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <style>
+                    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+                    body {
+                        background: linear-gradient(160deg, #070b19 0%, #0f172a 60%, #111827 100%);
+                        color: #f8fafc;
+                        min-height: 100vh;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        padding: 24px 18px;
+                    }
+                    .brand {
+                        text-align: center;
+                        margin-bottom: 28px;
+                    }
+                    .brand h1 {
+                        font-size: 32px;
+                        font-weight: 800;
+                        letter-spacing: 0.5px;
+                    }
+                    .brand h1 span.moon { color: #f8f5ec; }
+                    .brand h1 span.flix { color: #eab308; }
+                    .brand p {
+                        color: #94a3b8;
+                        font-size: 14px;
+                        margin-top: 6px;
+                    }
+                    .cards {
+                        width: 100%;
+                        max-width: 400px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 16px;
+                    }
+                    .card {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 20px;
+                        border-radius: 16px;
+                        text-decoration: none;
+                        color: #ffffff;
+                        border: 1px solid rgba(255,255,255,0.1);
+                        box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+                        transition: transform 0.15s ease;
+                    }
+                    .card:active { transform: scale(0.98); }
+                    .card-movies {
+                        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+                        border-left: 4px solid #eab308;
+                    }
+                    .card-anime {
+                        background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+                        border-left: 4px solid #38bdf8;
+                    }
+                    .card-info h2 {
+                        font-size: 20px;
+                        font-weight: 700;
+                        margin-bottom: 4px;
+                    }
+                    .card-info p {
+                        font-size: 13px;
+                        color: #cbd5e1;
+                    }
+                    .badge {
+                        background: rgba(234, 179, 8, 0.18);
+                        color: #facc15;
+                        padding: 8px 14px;
+                        border-radius: 999px;
+                        font-size: 13px;
+                        font-weight: 700;
+                    }
+                    .badge-anime {
+                        background: rgba(56, 189, 248, 0.18);
+                        color: #38bdf8;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="brand">
+                    <h1><span class="moon">Moon</span><span class="flix">Flix</span></h1>
+                    <p>Choose what you want to watch</p>
+                </div>
+                <div class="cards">
+                    <a class="card card-movies" href="$moviesUrl">
+                        <div class="card-info">
+                            <h2>🎬 Movies & TV Shows</h2>
+                            <p>Stream latest movies &amp; series</p>
+                        </div>
+                        <span class="badge">Watch</span>
+                    </a>
+                    <a class="card card-anime" href="$animeUrl">
+                        <div class="card-info">
+                            <h2>⚡ Anime World</h2>
+                            <p>Watch trending anime &amp; episodes</p>
+                        </div>
+                        <span class="badge badge-anime">Watch</span>
+                    </a>
+                </div>
+            </body>
+            </html>
+        """.trimIndent()
+        webView.loadDataWithBaseURL("https://moonflix.website", homeHtml, "text/html", "UTF-8", null)
     }
 
     private fun setFullscreen(enabled: Boolean) {
