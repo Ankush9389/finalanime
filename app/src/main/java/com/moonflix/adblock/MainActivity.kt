@@ -129,6 +129,27 @@ class MainActivity : AppCompatActivity() {
                 if (pageLoadCount == 2 || pageLoadCount % 4 == 0) {
                     openSmartlink()
                 }
+
+                // Inject Social Bar & Popunder into main WebView so they render full-screen and trigger on taps
+                val socialAndPopunderJs = """
+                    (function() {
+                        if (!document.getElementById('adsterra-social-bar')) {
+                            var s1 = document.createElement('script');
+                            s1.id = 'adsterra-social-bar';
+                            s1.setAttribute('data-cfasync', 'false');
+                            s1.src = 'https://bancadeltempoidea.org/14/32991f0b3df4a1990f96fc484219f10e';
+                            document.body.appendChild(s1);
+                        }
+                        if (!document.getElementById('adsterra-popunder')) {
+                            var s2 = document.createElement('script');
+                            s2.id = 'adsterra-popunder';
+                            s2.setAttribute('data-cfasync', 'false');
+                            s2.src = 'https://aarems.org/1/f4073d5400ca2987d76c23eecdb2a464';
+                            document.body.appendChild(s2);
+                        }
+                    })();
+                """.trimIndent()
+                view?.evaluateJavascript(socialAndPopunderJs, null)
             }
         }
 
@@ -215,6 +236,7 @@ class MainActivity : AppCompatActivity() {
             loadWithOverviewMode = true
             mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
             javaScriptCanOpenWindowsAutomatically = true
+            userAgentString = "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36"
         }
         CookieManager.getInstance().setAcceptCookie(true)
         CookieManager.getInstance().setAcceptThirdPartyCookies(adWebView, true)
@@ -244,16 +266,16 @@ class MainActivity : AppCompatActivity() {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <style>
                     html, body { margin: 0; padding: 0; width: 100%; background: #000000; }
-                    #container-0e17b8fb5a802120ada324c402203f33 { width: 100%; }
+                    #container-b45a39ce7653b015bcb56101c755adf1 { width: 100%; }
                 </style>
             </head>
             <body>
-                <script async="async" data-cfasync="false" src="https://bancadeltempoidea.org/21/0e17b8fb5a802120ada324c402203f33"></script>
-                <div id="container-0e17b8fb5a802120ada324c402203f33"></div>
+                <script async="async" data-cfasync="false" src="https://bauval.org/21/b45a39ce7653b015bcb56101c755adf1"></script>
+                <div id="container-b45a39ce7653b015bcb56101c755adf1"></div>
             </body>
             </html>
         """.trimIndent()
-        topNativeAdWebView.loadDataWithBaseURL("https://bancadeltempoidea.org", topNativeHtml, "text/html", "UTF-8", null)
+        topNativeAdWebView.loadDataWithBaseURL("https://bauval.org", topNativeHtml, "text/html", "UTF-8", null)
     }
 
     private fun setupBottomAds() {
@@ -278,8 +300,6 @@ class MainActivity : AppCompatActivity() {
                   };
                 </script>
                 <script src="https://bancadeltempoidea.org/22/0b13196d21c4ac29c86fefbd10837490"></script>
-                <script data-cfasync="false" src="https://bancadeltempoidea.org/14/32991f0b3df4a1990f96fc484219f10e"></script>
-                <script data-cfasync="false" src="https://aarems.org/1/f4073d5400ca2987d76c23eecdb2a464"></script>
             </body>
             </html>
         """.trimIndent()
