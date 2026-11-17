@@ -235,13 +235,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupTopNativeAd() {
         configureAdWebView(topNativeAdWebView)
+        topNativeAdWebView.settings.useWideViewPort = false
+        topNativeAdWebView.settings.loadWithOverviewMode = false
         val topNativeHtml = """
             <!DOCTYPE html>
             <html>
             <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <style>
-                    body { margin: 0; padding: 0; background: #000000; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+                    html, body { margin: 0; padding: 0; width: 100%; background: #000000; }
+                    #container-0e17b8fb5a802120ada324c402203f33 { width: 100%; }
                 </style>
             </head>
             <body>
