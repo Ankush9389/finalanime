@@ -281,10 +281,26 @@ class MainActivity : AppCompatActivity() {
                         background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
                         border-left: 4px solid #38bdf8;
                     }
+                    .card-left {
+                        display: flex;
+                        align-items: center;
+                        gap: 14px;
+                    }
+                    .icon-box {
+                        width: 48px;
+                        height: 48px;
+                        border-radius: 12px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-shrink: 0;
+                    }
+                    .icon-movies { background: rgba(234, 179, 8, 0.14); }
+                    .icon-anime { background: rgba(56, 189, 248, 0.14); }
                     .card-info h2 {
-                        font-size: 20px;
+                        font-size: 18px;
                         font-weight: 700;
-                        margin-bottom: 4px;
+                        margin-bottom: 3px;
                     }
                     .card-info p {
                         font-size: 13px;
@@ -310,20 +326,30 @@ class MainActivity : AppCompatActivity() {
                     <p>Choose what you want to watch</p>
                 </div>
                 <div class="cards">
-                    <a class="card card-movies" href="$moviesUrl">
-                        <div class="card-info">
-                            <h2>🎬 Movies & TV Shows</h2>
-                            <p>Stream latest movies &amp; series</p>
+                    <div class="card card-movies" onclick="window.location.href='$moviesUrl'">
+                        <div class="card-left">
+                            <div class="icon-box icon-movies">
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+                            </div>
+                            <div class="card-info">
+                                <h2>Movies &amp; TV Shows</h2>
+                                <p>Stream latest movies &amp; series</p>
+                            </div>
                         </div>
                         <span class="badge">Watch</span>
-                    </a>
-                    <a class="card card-anime" href="$animeUrl">
-                        <div class="card-info">
-                            <h2>⚡ Anime World</h2>
-                            <p>Watch trending anime &amp; episodes</p>
+                    </div>
+                    <div class="card card-anime" onclick="window.location.href='$animeUrl'">
+                        <div class="card-left">
+                            <div class="icon-box icon-anime">
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            </div>
+                            <div class="card-info">
+                                <h2>Anime World</h2>
+                                <p>Watch trending anime &amp; episodes</p>
+                            </div>
                         </div>
                         <span class="badge badge-anime">Watch</span>
-                    </a>
+                    </div>
                 </div>
             </body>
             </html>
